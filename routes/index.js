@@ -18,4 +18,8 @@ router.get('/create', function(req, res) {
   res.sendFile(path.join(__dirname, '../public', 'create.html'));
 });
 
+router.get('/song/:id', function(req, res) {
+  res.sendFile(path.join(__dirname, '../public', 'song.html'));
+});
+
 module.exports = router;

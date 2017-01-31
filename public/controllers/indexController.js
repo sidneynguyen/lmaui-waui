@@ -1,5 +1,7 @@
 var isAuthenticated = false;
 
+var songsList;
+
 $(document).ready(function() {
   $.ajax({
     type: 'GET',
@@ -26,29 +28,15 @@ var authCheck = function(auth) {
 }
 
 var displaySongs = function(songs) {
+  songsList = songs;
   for (var i = 0; i < songs.length; i++) {
-    var song = songs[i];
-    $('#song-list').append($('<div>')
-        .append($('<h1>').text(song.title))
+    var song = songsList[i];
+    $('#song-list').append($('<div>').attr('id', song._id))
+        .append($('<a>').attr('href', '/song/' + song._id)
+            .append($('<h1>').text(song.title)))
         .append($('<p>').text(song.music))
-        .append($('<small>').text(song.dateCreated)));
+        .append($('<small>').text(song.dateCreated));
   }
-}
-
-function submitSong() {
-  var song = arrayToJson($('#song-form').serializeArray());
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:3000/api/song',
-    data: song,
-    success: function(song) {
-      $('#song-list').append($('<div>')
-        .append($('<h1>').text(song.title))
-        .append($('<p>').text(song.music))
-        .append($('<small>').text(song.dateCreated)));
-    }
-  });
-  return false;
 }
 
 function arrayToJson(formArray) {

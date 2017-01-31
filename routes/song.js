@@ -16,6 +16,15 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/:id', function(req, res, next) {
+  Song.findOne({_id: req.params.id}, function(err, song) {
+    if (err) {
+      res.send(err);
+    }
+    res.json(song);
+  });
+})
+
 /**
  * POST /api/song/
  * Create a new song

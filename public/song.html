@@ -10,17 +10,15 @@
 
   <div class="container-fluid">
 
-    <form id="song-form" onSubmit="return submitSong()">
-      <input type="text" name="title" placeholder="Title"><br>
-      <input type="text" name="music" placeholder="Music"><br>
-      <input type="submit" value="Submit">
-    </form>
+    <h1 id="title"></h1>
+    <p id="music"></p>
+    <small id="date-created"></small>
 
   </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="controllers/createController.js"></script>
+  <script src="controllers/songController.js"></script>
   <script src="scripts/include.js"></script>
 </body>
 </html>
