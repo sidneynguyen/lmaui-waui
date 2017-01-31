@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
@@ -14,14 +13,6 @@ router.get('/', function(req, res, next) {
     }
     res.json(users);
   });
-});
-
-router.get('/register', function(req, res) {
-  res.sendFile(path.join(__dirname, '../public', 'register.html'));
-});
-
-router.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname, '../public', 'login.html'));
 });
 
 router.get('/logout', function(req, res) {
@@ -42,10 +33,9 @@ router.post('/register', function(req, res) {
       newUser.password = hash;
       newUser.save(function(err, user) {
         if (err) {
-          res.send(err);
+          return res.send(err);
         }
-        res.json(user);
-        res.redirect('/user/login');
+        res.redirect('/login');
       });
     });
   });
@@ -53,7 +43,7 @@ router.post('/register', function(req, res) {
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/users/login'
+  failureRedirect: '/login'
 }));
 
 passport.use(new LocalStrategy(function(username, password, done) {
