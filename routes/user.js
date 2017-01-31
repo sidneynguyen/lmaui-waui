@@ -7,12 +7,10 @@ var User = mongoose.model('User');
 var bcrypt = require('bcryptjs');
 
 router.get('/', function(req, res, next) {
-  User.find(function(err, users) {
-    if (err) {
-      res.send(err);
-    }
-    res.json(users);
-  });
+  var auth = {
+    isAuthenticated: req.isAuthenticated()
+  }
+  res.json(auth);
 });
 
 router.get('/logout', function(req, res) {

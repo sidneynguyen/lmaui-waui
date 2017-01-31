@@ -2,23 +2,29 @@
 <html>
 <head>
   <title>L'Maui Waui</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  <h1>Welcome</h1>
-  <a href="/login">Log In</a>
-  <a href="/register">Register</a>
-  <a href="user/logout">Log Out</a>
+  <div class="container-fluid">
 
-  <form id="song-form" onSubmit="return submitSong()">
-    <input type="text" name="title" placeholder="Title"><br>
-    <input type="text" name="music" placeholder="Music"><br>
-    <input type="submit" value="Submit">
-  </form>
+    <h1>Welcome</h1>
+    <a hidden class="auth-hide" href="/login">Log In</a>
+    <a hidden class="auth-hide" href="/register">Register</a>
+    <a hidden class="auth-show" href="user/logout">Log Out</a>
 
-  <div id="song-list"></div>
+    <form id="song-form" onSubmit="return submitSong()">
+      <input type="text" name="title" placeholder="Title"><br>
+      <input type="text" name="music" placeholder="Music"><br>
+      <input type="submit" value="Submit">
+    </form>
+
+    <div id="song-list"></div>
+
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="scripts/songsubmit.js"></script>
 </body>
 </html>

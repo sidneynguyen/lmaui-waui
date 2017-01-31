@@ -1,10 +1,29 @@
+var isAuthenticated = false;
+
 $(document).ready(function() {
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost:3000/user',
+    success: authCheck
+  });
+
   $.ajax({
     type: 'GET',
     url: 'http://localhost:3000/api/song',
     success: displaySongs
-  })
+  });
 });
+
+var authCheck = function(auth) {
+  isAuthenticated = auth.isAuthenticated;
+  if (isAuthenticated) {
+    $('.auth-hide').hide();
+    $('.auth-show').show();
+  } else {
+    $('.auth-hide').show();
+    $('.auth-show').hide();
+  }
+}
 
 var displaySongs = function(songs) {
   for (var i = 0; i < songs.length; i++) {
