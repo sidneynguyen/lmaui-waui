@@ -8,21 +8,16 @@
 <body>
   <div class="container-fluid">
 
-    <h1>Welcome</h1>
-    <a hidden class="auth-hide" href="/login">Log In</a><br>
-    <a hidden class="auth-hide" href="/register">Register</a><br>
-    <a hidden class="auth-show" href="/user/logout">Log Out</a><br>
-
-    <hr>
-
-    <a hidden class="auth-show" href="/create">Create</a><br>
-
-    <div id="song-list"></div>
+    <form id="song-form" onSubmit="return submitSong()">
+      <input type="text" name="title" placeholder="Title"><br>
+      <input type="text" name="music" placeholder="Music"><br>
+      <input type="submit" value="Submit">
+    </form>
 
   </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="controllers/indexController.js"></script>
+  <script src="controllers/createController.js"></script>
 </body>
 </html>
