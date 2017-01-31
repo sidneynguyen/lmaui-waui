@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>L'Maui Waui</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <h1>Welcome</h1>
+  <a href="user/login">Log In</a>
+  <a href="user/register">Register</a>
+  <a href="user/logout">Log Out</a>
+
+  <form id="song-form" onSubmit="return submitSong()">
+    <input type="text" name="title" placeholder="Title"><br>
+    <input type="text" name="music" placeholder="Music"><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="song-list"></div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="scripts/songsubmit.js"></script>
+</body>
+</html>
