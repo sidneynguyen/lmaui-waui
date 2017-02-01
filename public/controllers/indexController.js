@@ -31,11 +31,12 @@ var displaySongs = function(songs) {
   songsList = songs;
   for (var i = 0; i < songs.length; i++) {
     var song = songsList[i];
+    var date = new Date(song.dateCreated);
     $('#song-list').append($('<div>').attr('id', song._id))
         .append($('<a>').attr('href', '/song/' + song._id)
             .append($('<h1>').text(song.title)))
         .append($('<p>').text(song.music))
-        .append($('<small>').text(song.dateCreated));
+        .append($('<small>').text(date.toString()));
   }
 }
 
