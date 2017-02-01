@@ -12,25 +12,23 @@ module.exports = {
   },
   
   insertUser: function(user, callback) {
-    user.save(user, callback(err, user));
+    user.save(user, callback);
   },
 
   selectUserByUsername: function(username, callback) {
-    User.findOne({username: username}, callback(err, user));
+    User.findOne({username: username}, callback);
   },
 
   selectUserById: function(id, callback) {
-    User.findOne({_id: id}, callback(err, user));
+    User.findOne({_id: id}, callback);
   },
 
   selectNSongs: function(n, callback) {
-    Song.find().sort({dateCreated: -1}).limit(n).exec(function(err, songs) {
-      callback(err, songs);
-    });
+    Song.find().sort({dateCreated: -1}).limit(n).exec(callback);
   },
 
   selectSongById: function(id, callback) {
-    Song.findOne({_id: id}, callback(err, song));
+    Song.findOne({_id: id}, callback);
   },
 
   insertSong: function(song, callback) {
