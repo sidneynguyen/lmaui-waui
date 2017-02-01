@@ -15,6 +15,7 @@ function arrayToJson(formArray) {
   var song = {
     title: formArray[0].value,
     music: formArray[1].value,
+    privacy: formArray[2].value
   };
   return song;
 }

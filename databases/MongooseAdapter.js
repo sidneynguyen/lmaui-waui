@@ -1,18 +1,21 @@
 var express = require('express');
 var mongoose = require('mongoose');
-require('../models/song');
-require('../models/user');
-var User = mongoose.model('User');
-var Song = mongoose.model('Song');
 
 module.exports = {
+  User: {},
+  Song: {},
   connect: function() {
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost:27017/lmauiwaui');
+    require('../models/song');
+    require('../models/user');
+    User = mongoose.model('User');
+    Song = mongoose.model('Song');
   },
   
   insertUser: function(user, callback) {
-    user.save(user, callback);
+    var newUser = new User(user);
+    newUser.save(user, callback);
   },
 
   selectUserByUsername: function(username, callback) {
@@ -32,6 +35,7 @@ module.exports = {
   },
 
   insertSong: function(song, callback) {
-    song.save(callback);
+    var newSong = new Song(song);
+    newSong.save(callback);
   }
 };

@@ -20,6 +20,20 @@ router.get('/:id', function(req, res, next) {
     if (err) {
       res.send(err);
     }
+    if (song.privacy !== 'public') {
+      if (!req.isAuthenticated()) {
+        return res.json({
+          err: 'Song is private'
+        });
+      }
+      if (req.user._id != song.createdBy) {
+        console.log(req.user._id);
+        console.log(song.createdBy);
+        return res.json({
+          err: 'Song is private'
+        });
+      }
+    }
     res.json(song);
   });
 })
@@ -32,22 +46,22 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   if (!req.isAuthenticated()) {
     res.status(400);
-    res.json({
-      error: 'User not logged in'
-    });
     return res.redirect('/user/login');
   }
   var song = req.body;
-  if (!song.title || !song.music) {
+  if (!song.title || !song.music || !song.privacy) {
     res.status(400);
     res.json({
       error: 'Invalid data'
     });
     return;
   }
-  var newSong = new Song();
-  newSong.title = song.title;
-  newSong.music = song.music;
+  var newSong = {
+    title: song.title,
+    music: song.music,
+    privacy: song.privacy,
+    createdBy: req.user._id
+  }
   db.insertSong(newSong, function(err, song) {
     if (err) {
       res.send(err);

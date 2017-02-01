@@ -10,6 +10,9 @@ $(document).ready(function() {
 });
 
 function displaySong(song) {
+  if (song.err) {
+    console.log(song.err);
+  }
   $('#title').text(song.title);
   $('#music').text(song.music);
   $('#date-created').text(song.dateCreated);

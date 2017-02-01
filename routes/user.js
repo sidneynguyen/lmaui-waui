@@ -19,11 +19,11 @@ router.get('/logout', function(req, res) {
 
 router.post('/register', function(req, res) {
   var user = req.body;
-  var newUser = new User({
+  var newUser = {
     username: user.username,
     password: user.password,
     email: user.email
-  });
+  };
 
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(newUser.password, salt, function(err, hash) {
