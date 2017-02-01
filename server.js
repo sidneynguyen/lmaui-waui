@@ -5,9 +5,8 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 
-mongoose.connect('mongodb://localhost:27017/lmauiwaui');
-require('./models/song');
-require('./models/user');
+var db = require('./databases/MongooseAdapter');
+db.connect();
 
 var index = require('./routes/index');
 var user = require('./routes/user');

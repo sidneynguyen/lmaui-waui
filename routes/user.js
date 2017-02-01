@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
+//var mongoose = require('mongoose');
+//var User = mongoose.model('User');
+var db = require('../databases/MongooseAdapter');
 var bcrypt = require('bcryptjs');
 
 router.get('/', function(req, res, next) {
@@ -29,7 +30,7 @@ router.post('/register', function(req, res) {
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(newUser.password, salt, function(err, hash) {
       newUser.password = hash;
-      newUser.save(function(err, user) {
+      db.insertUser(newUser, function(err, user) {
         if (err) {
           return res.send(err);
         }
@@ -45,7 +46,7 @@ router.post('/login', passport.authenticate('local', {
 }));
 
 passport.use(new LocalStrategy(function(username, password, done) {
-  User.findOne({username: username}, function(err, user) {
+  db.selectUserByUsername(username, function(err, user) {
     if (err) {
       return res.send(err);
     }
@@ -69,7 +70,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findOne({_id: id}, function(err, user) {
+  db.selectUserById(id, function(err, user) {
     done(err, user);
   });
 });

@@ -1,14 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var Song = mongoose.model('Song');
+//var mongoose = require('mongoose');
+//var Song = mongoose.model('Song');
+var db = require('../databases/MongooseAdapter');
 
 /**
  * GET /api/song/
  * @return 50 of the most recent songs
  */
 router.get('/', function(req, res, next) {
-  Song.find().sort({dateCreated: -1}).limit(50).exec(function(err, songs) {
+  db.selectNSongs(50, function(err, songs) {
     if (err) {
       res.send(err);
     }
@@ -17,7 +18,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  Song.findOne({_id: req.params.id}, function(err, song) {
+  db.selectSongById(req.params.id, function(err, song) {
     if (err) {
       res.send(err);
     }
@@ -49,7 +50,7 @@ router.post('/', function(req, res, next) {
   var newSong = new Song();
   newSong.title = song.title;
   newSong.music = song.music;
-  newSong.save(function(err, song) {
+  db.insertSong(newSong, function(err, song) {
     if (err) {
       res.send(err);
     }
