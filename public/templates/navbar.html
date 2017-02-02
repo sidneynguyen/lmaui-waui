@@ -6,18 +6,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
-      <a class="navbar-brand" href="#">L'Maui Waui</a>
+      <a class="navbar-brand" href="/">L'Maui Waui</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li> 
-        <li><a href="#">Page 3</a></li> 
-      </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li class="auth-hide"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+        <li class="auth-hide"><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li class="auth-show"><a href="/create"><span class="glyphicon glyphicon-pencil"></span> Create</a></li>
+        <li class="auth-show"><a href="/user/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
       </ul>
     </div>
   </div>

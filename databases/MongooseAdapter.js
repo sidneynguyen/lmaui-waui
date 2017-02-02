@@ -27,7 +27,7 @@ module.exports = {
   },
 
   selectNSongs: function(n, callback) {
-    Song.find().sort({dateCreated: -1}).limit(n).exec(callback);
+    Song.find({privacy: 'public'}).sort({dateCreated: -1}).limit(n).exec(callback);
   },
 
   selectSongById: function(id, callback) {
