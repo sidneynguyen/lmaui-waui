@@ -19,6 +19,34 @@ router.get('/logout', function(req, res) {
 
 router.post('/register', function(req, res) {
   var user = req.body;
+
+  if (!user.username) {
+    return res.json({
+      err: 'Username is required'
+    });
+  }
+  if (!user.password) {
+    return res.json({
+      err: 'Password is required'
+    });
+  }
+  if (!user.email) {
+    return res.json({
+      err: 'Email is required'
+    });
+  }
+
+  db.selectUserByUsername(user.username, function(err, user) {
+    if (err) {
+      return res.send(err);
+    }
+    if (user) {
+      return res.json({
+        err: 'Username already taken'
+      });
+    }
+  });
+
   var newUser = {
     username: user.username,
     password: user.password,
