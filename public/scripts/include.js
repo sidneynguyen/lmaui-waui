@@ -2,6 +2,7 @@ var isAuthenticated = false;
 
 $(document).ready(function() {
   $('#navbar-container').load('templates/navbar.html');
+  displayAuthItems();
 
   $.ajax({
     type: 'GET',
@@ -12,6 +13,10 @@ $(document).ready(function() {
 
 var authCheck = function(auth) {
   isAuthenticated = auth.isAuthenticated;
+  displayAuthItems();
+}
+
+function displayAuthItems() {
   if (isAuthenticated) {
     $('.auth-hide').hide();
     $('.auth-show').show();
