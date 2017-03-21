@@ -1,5 +1,6 @@
 function submitSong() {
   var song = arrayToJson($('#song-form').serializeArray());
+  song.music = melody;
   $.ajax({
     type: 'POST',
     url: 'http://localhost:3000/api/song',
@@ -14,8 +15,7 @@ function submitSong() {
 function arrayToJson(formArray) {
   var song = {
     title: formArray[0].value,
-    music: formArray[1].value,
-    privacy: formArray[2].value
+    privacy: formArray[1].value
   };
   return song;
 }
