@@ -6,10 +6,19 @@ var db = require('../databases/MongooseAdapter');
 var bcrypt = require('bcryptjs');
 
 router.get('/', function(req, res, next) {
-  var auth = {
-    isAuthenticated: req.isAuthenticated()
+  var userData = {
+    isAuthenticated: req.isAuthenticated(),
   }
-  res.json(auth);
+  res.json(userData);
+});
+
+router.get('/me', function(req, res, next) {
+  db.selectSongsAsUser(req, function(err, songs) {
+    if (err) {
+      return res.send(err);
+    }
+    res.json(songs);
+  });
 });
 
 router.get('/logout', function(req, res) {

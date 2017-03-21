@@ -37,5 +37,15 @@ module.exports = {
   insertSong: function(song, callback) {
     var newSong = new Song(song);
     newSong.save(callback);
+  },
+
+  selectSongsAsUser: function(req, callback) {
+    if (req.isAuthenticated()) {
+      Song.find({uid: req.user._id}, callback)
+    } else {
+      callback({
+        err: 'User is not authenticated'
+      }, null);
+    }
   }
 };
