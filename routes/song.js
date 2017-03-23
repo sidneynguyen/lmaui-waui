@@ -1,10 +1,23 @@
+/**
+ * Filename: song.js
+ * Authors: Sidney Nguyen
+ * Date Created: March 22, 2017
+ */
+
+//
+// DEPENDENCIES
+//
 var express = require('express');
 var router = express.Router();
 var db = require('../databases/MongooseAdapter');
 
+//
+// ROUTES
+//
+
 /**
  * GET /api/song/
- * @return 50 of the most recent songs
+ * Send JSON of 50 of the most recent public songs.
  */
 router.get('/', function(req, res, next) {
   db.selectNSongs(50, function(err, songs) {
@@ -15,6 +28,10 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/**
+ * GET /api/song/:id/
+ * Send JSON of song with id.
+ */
 router.get('/:id', function(req, res, next) {
   db.selectSongById(req.params.id, function(err, song) {
     if (err) {
@@ -40,8 +57,8 @@ router.get('/:id', function(req, res, next) {
 
 /**
  * POST /api/song/
- * Create a new song
- * @return the new song
+ * Validate and store song in database.
+ * Send JSON of newly created song.
  */
 router.post('/', function(req, res, next) {
   if (!req.isAuthenticated()) {

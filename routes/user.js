@@ -1,3 +1,12 @@
+/**
+ * Filename: user.js
+ * Authors: Sidney Nguyen
+ * Date Created: March 22, 2017
+ */
+
+//
+// DEPENDENCIES
+//
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
@@ -6,6 +15,14 @@ var RememberMeStrategy = require('passport-remember-me').Strategy;
 var db = require('../databases/MongooseAdapter');
 var bcrypt = require('bcryptjs');
 
+//
+// ROUTES
+//
+
+/**
+ * GET /user/
+ * Send JSON indicating if current user is authenticated.
+ */
 router.get('/', function(req, res, next) {
   var userData = {
     isAuthenticated: req.isAuthenticated(),
@@ -13,6 +30,10 @@ router.get('/', function(req, res, next) {
   res.json(userData);
 });
 
+/**
+ * GET /user/me/
+ * Send JSON of current user's profile info and songs.
+ */
 router.get('/me', function(req, res, next) {
   if (req.isAuthenticated()) {
     db.selectUserById(req.user._id, function(err, user) {
@@ -41,12 +62,20 @@ router.get('/me', function(req, res, next) {
   }
 });
 
+/**
+ * GET /user/logout/
+ * Destroy user login session.
+ */
 router.get('/logout', function(req, res) {
   res.clearCookie('remember_me');
   req.logout();
   res.redirect('/');
 });
 
+/**
+ * POST /user/register/
+ * Attempt to register a new account.
+ */
 router.post('/register', function(req, res) {
   var user = req.body;
 
@@ -96,6 +125,10 @@ router.post('/register', function(req, res) {
   });
 });
 
+/**
+ * POST /user/login/
+ * Attempt to log a user in.
+ */
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login'
 }), function(req, res, next) {
@@ -109,6 +142,10 @@ router.post('/login', passport.authenticate('local', {
 }, function(req, res) {
   res.redirect('/');
 });
+
+//
+// AUTHENTICATION MIDDLEWARE
+//
 
 passport.use(new LocalStrategy(function(username, password, done) {
   db.selectUserByUsername(username, function(err, user) {
@@ -158,13 +195,16 @@ function saveRememberMeToken(token, uid, callback) {
 }
 
 function issueToken(user, done) {
-  var token = 'abcd';
-  saveRememberMeToken(token, user._id, function(err) {
-    if (err) {
-      return done(err);
-    }
-    return done(null, token);
-  })
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(user.username + user._id, salt, function(err, token) {
+      saveRememberMeToken(token, user._id, function(err) {
+      if (err) {
+        return done(err);
+      }
+        return done(null, token);
+      });
+    });
+  });
 }
 
 passport.use(new RememberMeStrategy(function(token, done) {
