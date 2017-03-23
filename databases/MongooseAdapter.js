@@ -9,8 +9,10 @@ module.exports = {
     mongoose.connect('mongodb://localhost:27017/lmauiwaui');
     require('../models/song');
     require('../models/user');
+    require('../models/token');
     User = mongoose.model('User');
     Song = mongoose.model('Song');
+    Token = mongoose.model('Token');
   },
   
   insertUser: function(user, callback) {
@@ -24,6 +26,19 @@ module.exports = {
 
   selectUserById: function(id, callback) {
     User.findOne({_id: id}, callback);
+  },
+
+  selectTokenByToken: function(token, callback) {
+    Token.find({token: token}, callback);
+  },
+
+  deleteTokenByToken: function(token, callback) {
+    Token.delete({token: token}, callback);
+  },
+
+  insertToken: function(token, callback) {
+    var newToken = new Token(token);
+    newToken.save(callback);
   },
 
   selectNSongs: function(n, callback) {

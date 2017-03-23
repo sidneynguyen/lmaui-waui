@@ -63,7 +63,7 @@ router.post('/', function(req, res, next) {
     melody: song.melody,
     chords: song.chords,
     privacy: song.privacy,
-    createdBy: req.user._id
+    uid: req.user._id
   }
   db.insertSong(newSong, function(err, song) {
     if (err) {

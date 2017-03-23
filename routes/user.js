@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var RememberMeStrategy = require('passport-remember-me').Strategy;
 var db = require('../databases/MongooseAdapter');
 var bcrypt = require('bcryptjs');
 
@@ -22,6 +23,7 @@ router.get('/me', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res) {
+  res.clearCookie('remember_me');
   req.logout();
   res.redirect('/');
 });
@@ -76,9 +78,18 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
   failureRedirect: '/login'
-}));
+}), function(req, res, next) {
+  issueToken(req.user, function(err, token) {
+    if (err) {
+      return next(err);
+    }
+    res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000});
+    return next();
+  });
+}, function(req, res) {
+  res.redirect('/');
+});
 
 passport.use(new LocalStrategy(function(username, password, done) {
   db.selectUserByUsername(username, function(err, user) {
@@ -99,6 +110,57 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
   });
 }));
+
+function consumeRememberMeToken(token, callback) {
+  db.selectTokenByToken(token, function(err, tokenData) {
+    if (err) {
+      return callback(err);
+    }
+    if (!tokenData) {
+      return callback({error: 'User not found'});
+    }
+    var uid = tokenData.uid;
+    db.deleteTokenByToken(token, function(err, token) {
+      if (err) {
+        return callback(err);
+      }
+      return callback(null, uid);
+    });
+  });
+}
+
+function saveRememberMeToken(token, uid, callback) {
+  db.insertToken({token: token, uid: uid}, function(err, token) {
+    if (err) {
+      return callback(err);
+    }
+    return callback();
+  });
+}
+
+function issueToken(user, done) {
+  var token = 'abcd';
+  saveRememberMeToken(token, user._id, function(err) {
+    if (err) {
+      return done(err);
+    }
+    return done(null, token);
+  })
+}
+
+passport.use(new RememberMeStrategy(function(token, done) {
+  consumeRememberMeToken(token, function(err, uid) {
+    if (err) {
+      return done(err);
+    }
+    if (!uid) {
+      return done(null, false);
+    }
+    db.selectUserById(uid, function(err, user) {
+      return done(null, user);
+    });
+  });
+}, issueToken));
 
 passport.serializeUser(function(user, done) {
   done(null, user._id);

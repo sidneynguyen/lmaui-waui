@@ -5,8 +5,12 @@ var songSchema = mongoose.Schema({
   melody: String,
   chords: String,
   privacy: String,
-  createdBy: String,
+  uid: String,
   dateCreated: {
+    type: Date,
+    default: Date.now
+  },
+  dateModified: {
     type: Date,
     default: Date.now
   }
