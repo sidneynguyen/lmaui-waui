@@ -35,7 +35,8 @@ var displaySongs = function(songs) {
     $('#song-list').append($('<div>').attr('id', song._id))
         .append($('<a>').attr('href', '/song/' + song._id)
             .append($('<h1>').text(song.title)))
-        .append($('<p>').text(song.music))
+        .append($('<p>').text(song.melody))
+        .append($('<small>').text(song.chords)).append($('<br>'))
         .append($('<small>').text(date.toString()));
   }
 }

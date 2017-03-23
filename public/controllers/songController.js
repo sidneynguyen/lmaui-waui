@@ -14,7 +14,8 @@ function displaySong(song) {
     console.log(song.err);
   }
   $('#title').text(song.title);
-  $('#music').text(song.music);
+  $('#melody').text(song.melody);
+  $('#chords').text(song.chords);
   $('#date-created').text(song.dateCreated);
 }
 

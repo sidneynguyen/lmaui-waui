@@ -46,10 +46,12 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   if (!req.isAuthenticated()) {
     res.status(400);
-    return res.redirect('/user/login');
+    return res.json({
+      error: 420
+    });
   }
   var song = req.body;
-  if (!song.title || !song.music || !song.privacy) {
+  if (!(song.title && song.melody && song.chords && song.privacy)) {
     res.status(400);
     res.json({
       error: 'Invalid data'
@@ -58,7 +60,8 @@ router.post('/', function(req, res, next) {
   }
   var newSong = {
     title: song.title,
-    music: song.music,
+    melody: song.melody,
+    chords: song.chords,
     privacy: song.privacy,
     createdBy: req.user._id
   }
