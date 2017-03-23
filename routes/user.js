@@ -14,12 +14,31 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/me', function(req, res, next) {
-  db.selectSongsAsUser(req, function(err, songs) {
-    if (err) {
-      return res.send(err);
-    }
-    res.json(songs);
-  });
+  if (req.isAuthenticated()) {
+    db.selectUserById(req.user._id, function(err, user) {
+      if (err) {
+        return res.send(err);
+      }
+      var profile = {
+        user: {
+          id: user._id,
+          username: user.username,
+        }
+      }
+      db.selectSongsByUid(req.user._id, function(err, songs) {
+      if (err) {
+        return res.send(err);
+      }
+      profile.songs = songs;
+      profile.isAuthenticated = true;
+      res.json(profile);
+    });
+    });
+  } else {
+    res.json({
+      isAuthenticated: false
+    });
+  }
 });
 
 router.get('/logout', function(req, res) {

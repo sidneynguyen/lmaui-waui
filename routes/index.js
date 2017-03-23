@@ -22,4 +22,8 @@ router.get('/song/:id', function(req, res) {
   res.sendFile(path.join(__dirname, '../public', 'song.html'));
 });
 
+router.get('/profile', function(req, res) {
+  res.sendFile(path.join(__dirname, '../public', 'profile.html'));
+});
+
 module.exports = router;

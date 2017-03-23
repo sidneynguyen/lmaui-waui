@@ -33,7 +33,7 @@ module.exports = {
   },
 
   deleteTokenByToken: function(token, callback) {
-    Token.delete({token: token}, callback);
+    Token.remove({token: token}, callback);
   },
 
   insertToken: function(token, callback) {
@@ -54,13 +54,7 @@ module.exports = {
     newSong.save(callback);
   },
 
-  selectSongsAsUser: function(req, callback) {
-    if (req.isAuthenticated()) {
-      Song.find({uid: req.user._id}, callback)
-    } else {
-      callback({
-        err: 'User is not authenticated'
-      }, null);
-    }
+  selectSongsByUid: function(uid, callback) {
+    Song.find({uid: uid}, callback);
   }
 };
