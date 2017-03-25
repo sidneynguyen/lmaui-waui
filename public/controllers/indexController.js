@@ -1,14 +1,4 @@
-var isAuthenticated = false;
-
-var songsList;
-
 $(document).ready(function() {
-  $.ajax({
-    type: 'GET',
-    url: 'http://localhost:3000/user',
-    success: authCheck
-  });
-
   $.ajax({
     type: 'GET',
     url: 'http://localhost:3000/api/song',
@@ -16,21 +6,9 @@ $(document).ready(function() {
   });
 });
 
-var authCheck = function(auth) {
-  isAuthenticated = auth.isAuthenticated;
-  if (isAuthenticated) {
-    $('.auth-hide').hide();
-    $('.auth-show').show();
-  } else {
-    $('.auth-hide').show();
-    $('.auth-show').hide();
-  }
-}
-
-var displaySongs = function(songs) {
-  songsList = songs;
+function displaySongs(songs) {
   for (var i = 0; i < songs.length; i++) {
-    var song = songsList[i];
+    var song = songs[i];
     var date = new Date(song.dateCreated);
     $('#song-list').append($('<div>').attr('id', song._id))
         .append($('<a>').attr('href', '/song/' + song._id)
@@ -39,12 +17,4 @@ var displaySongs = function(songs) {
         .append($('<small>').text(song.chords)).append($('<br>'))
         .append($('<small>').text(date.toString()));
   }
-}
-
-function arrayToJson(formArray) {
-  var song = {
-    title: formArray[0].value,
-    music: formArray[1].value,
-  };
-  return song;
 }

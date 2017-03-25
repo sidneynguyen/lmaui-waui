@@ -1,4 +1,5 @@
 var isAuthenticated = false;
+var onAuthCheck;
 
 $(document).ready(function() {
   $('#navbar-container').load('templates/navbar.html');
@@ -13,11 +14,16 @@ $(document).ready(function() {
 
 var authCheck = function(auth) {
   isAuthenticated = auth.isAuthenticated;
-  displayAuthItems();
+  displayAuthItems(isAuthenticated);
+
+  // redirect to /login if requireAuth.js is included and user is not authenticated
+  if (onAuthCheck) {
+    onAuthCheck(isAuthenticated);
+  }
 }
 
-function displayAuthItems() {
-  if (isAuthenticated) {
+function displayAuthItems(isAuth) {
+  if (isAuth) {
     $('.auth-hide').hide();
     $('.auth-show').show();
   } else {
