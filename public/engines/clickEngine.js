@@ -55,7 +55,6 @@ function renderSong() {
               .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
                   .text(melody[mI].letter + melody[mI].octave)));
           i += parseInt(melody[mI].length);
-          console.log('m - i: ' + i);
           mI++;
         } else {
           var left = 0;
@@ -63,7 +62,6 @@ function renderSong() {
             left = 48 - parseInt(melody[mI - 1].length);
           }
           $('#song-output').append($('<div>').addClass('fill-length-' + left));
-          console.log('m - fill: ' + 48 - parseInt(melody[mI - 1].length));
           break;
         }
       } else {
@@ -71,7 +69,6 @@ function renderSong() {
           $('#song-output').append($('<div>').addClass('chord-container').addClass('chord-length-' + chords[cI].length)
             .append($('<p>').text(chords[cI].base)));
           i += parseInt(chords[cI].length);
-          console.log('c - i: ' + i);
           cI++;
         } else {
           var left = 0
@@ -79,7 +76,6 @@ function renderSong() {
             left = 48 - parseInt(chords[cI - 1].length);
           }
           $('#song-output').append($('<div>').addClass('fill-length-' + left));
-          console.log('c - fill: ' + 48 - parseInt(melody[mI - 1].length));
           break;
         }
       }
