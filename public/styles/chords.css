@@ -1,5 +1,6 @@
 .chord-container {
   display: inline-block;
+  height: 32px;
   background-color: lightcoral;
   border-width: 1px;
   border-style: solid; 
