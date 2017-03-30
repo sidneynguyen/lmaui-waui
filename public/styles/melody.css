@@ -1,46 +1,50 @@
 .melody-note-container {
   display: inline-block;
-  height: 288px;
+  height: 150px;
+  background-color: gray;
+  border-width: 1px;
+  border-style: solid; 
+  border-color: white;
 }
 
 .melody-octave-8 {
   position: relative;
-  top: 32px;
+  top: 15px;
 }
 
 .melody-octave-7 {
   position: relative;
-  top: 64px;
+  top: 30px;
 }
 
 .melody-octave-6 {
   position: relative;
-  top: 96px;
+  top: 45px;
 }
 
 .melody-octave-5 {
   position: relative;
-  top: 128px;
+  top: 60px;
 }
 
 .melody-octave-4 {
   position: relative;
-  top: 160px;
+  top: 75px;
 }
 
 .melody-octave-3 {
   position: relative;
-  top: 192px;
+  top: 90px;
 }
 
 .melody-octave-2 {
   position: relative;
-  top: 224px;
+  top: 105px;
 }
 
 .melody-octave-1 {
   position: relative;
-  top: 256px;
+  top: 120px;
 }
 
 .melody-length-16 {
@@ -61,4 +65,8 @@
 
 .melody-length-1 {
   width: 20px;
+}
+
+.melody-letter {
+  background-color: lightblue;
 }

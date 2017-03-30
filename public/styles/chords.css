@@ -1,0 +1,27 @@
+.chord-container {
+  display: inline-block;
+  background-color: lightcoral;
+  border-width: 1px;
+  border-style: solid; 
+  border-color: white;
+}
+
+.chord-length-16 {
+  width: 320px;
+}
+
+.chord-length-8 {
+  width: 160px;
+}
+
+.chord-length-4 {
+  width: 80px;
+}
+
+.chord-length-2 {
+  width: 40px;
+}
+
+.chord-length-1 {
+  width: 20px;
+}

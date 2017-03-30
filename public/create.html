@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/melody.css">
+  <link rel="stylesheet" href="styles/chords.css">
+  <link rel="stylesheet" href="styles/fill.css">
 </head>
 <body>
   <div id="navbar-container"></div>
@@ -56,11 +58,16 @@
     <button class="chord-base">A</button>
     <button class="chord-base">A#/Bb</button>
     <button class="chord-base">B</button>
+    <button class="note">Pause</button>
 
-    <pre id="chord-output"></pre>
-    
-    <input id="note-input" type="text" name="melodyNote" placeholder="Note">
-    <pre id="parsed-song"></pre>
+    <span>Chord Length:</span>
+    <input type="number" id="chord-length" value="16">
+
+    <div id="chord-output"></div>
+
+    <div id="song-output"></div>
+
+    <button onclick="renderSong()">Render</button>
 
   </div>
 
