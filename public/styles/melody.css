@@ -47,26 +47,6 @@
   top: 120px;
 }
 
-.melody-length-16 {
-  width: 320px;
-}
-
-.melody-length-8 {
-  width: 160px;
-}
-
-.melody-length-4 {
-  width: 80px;
-}
-
-.melody-length-2 {
-  width: 40px;
-}
-
-.melody-length-1 {
-  width: 20px;
-}
-
 .melody-letter {
   background-color: lightblue;
 }

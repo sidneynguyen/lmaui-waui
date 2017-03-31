@@ -29,36 +29,81 @@ function renderSong() {
   var mI = 0;
   var cI = 0;
   var onM = true;
+  var tmpM = null;
+  var tmpC = null;
   while (mI < melody.length || cI < chords.length) {
-    for (var i = 0; i < 48;) {
+    var i = 0;
+    while (i < 48) {
       if (onM) {
-        if (mI < melody.length && i + parseInt(melody[mI].length) <= 48) {
+        if (tmpM != null) {
           $('#song-output').append($('<div>').addClass('melody-note-container').attr('id', mI + '-melody')
-                  .addClass('melody-length-' + melody[mI].length)
+                  .addClass('length-' + tmpM.length)
+              .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
+                  .text(tmpM.letter + tmpM.octave)));
+          i += parseInt(tmpM.length);
+          tmpM = null;
+          mI++;
+        } else if (mI < melody.length) {
+
+          if (i + parseInt(melody[mI].length) <= 48) {
+            $('#song-output').append($('<div>').addClass('melody-note-container').attr('id', mI + '-melody')
+                  .addClass('length-' + melody[mI].length)
               .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
                   .text(melody[mI].letter + melody[mI].octave)));
-          i += parseInt(melody[mI].length);
-          mI++;
+            i += parseInt(melody[mI].length);
+            mI++;
+          } else {
+            $('#song-output').append($('<div>').addClass('melody-note-container').attr('id', mI + '-melody')
+                    .addClass('length-' + (48 - i))
+                .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
+                    .text(melody[mI].letter + melody[mI].octave)));
+            tmpM = {
+              letter: '...',
+              octave: melody[mI].octave,
+              length: melody[mI].length - (48 - i)
+            };
+            break;
+          }
+
         } else {
           var left = 0;
           if (melody.length != 0) {
             left = 48 - parseInt(melody[mI - 1].length);
           }
-          $('#song-output').append($('<div>').addClass('fill-length-' + left));
+          $('#song-output').append($('<div>').addClass('length-' + left));
           break;
         }
+
       } else {
-        if (cI < chords.length && i + parseInt(chords[cI].length) <= 48) {
-          $('#song-output').append($('<div>').addClass('chord-container').addClass('chord-length-' + chords[cI].length)
-            .append($('<p>').text(chords[cI].base)));
-          i += parseInt(chords[cI].length);
+        if (tmpC != null) {
+          $('#song-output').append($('<div>').addClass('chord-container').addClass('length-' + tmpC.length)
+            .append($('<p>').text(tmpC.base)));
+          i += parseInt(tmpC.length);
+          tmpC = null;
           cI++;
+        } else if (cI < chords.length) {
+
+          if (i + parseInt(chords[cI].length) <= 48) {
+            $('#song-output').append($('<div>').addClass('chord-container').addClass('length-' + chords[cI].length)
+                .append($('<p>').text(chords[cI].base)));
+            i += parseInt(chords[cI].length);
+            cI++;
+          } else {
+            $('#song-output').append($('<div>').addClass('chord-container').addClass('length-' + (48 - i))
+                .append($('<p>').text(chords[cI].base)));
+            tmpC = {
+              base: '...',
+              length: chords[cI].length - (48 - i)
+            };
+            break;
+          }
+
         } else {
           var left = 0
           if (chords.length != 0) {
             left = 48 - parseInt(chords[cI - 1].length);
           }
-          $('#song-output').append($('<div>').addClass('fill-length-' + left));
+          $('#song-output').append($('<div>').addClass('length-' + left));
           break;
         }
       }
