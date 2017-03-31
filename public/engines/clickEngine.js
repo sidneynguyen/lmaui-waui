@@ -24,6 +24,24 @@ $('.chord-base').click(function() {
   renderSong();
 });
 
+function addDeleteMelodyOnClick() {
+  $('.delete-melody-note').click(function() {
+    var id = $(this).parent().attr('id');
+    var index = '';
+    for (var i = 0; i < id.length; i++) {
+      if (id[i] != '-') {
+        index += id[i];
+      } else {
+        break;
+      }
+    }
+    index = parseInt(index);
+    melody.splice(index, 1);
+    renderSong();
+    return false;
+  });
+}
+
 function renderSong() {
   $('#song-output').empty();
   var mI = 0;
@@ -39,7 +57,8 @@ function renderSong() {
           $('#song-output').append($('<div>').addClass('melody-note-container').attr('id', mI + '-melody')
                   .addClass('length-' + tmpM.length)
               .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
-                  .text(tmpM.letter + tmpM.octave)));
+                  .text(tmpM.letter + tmpM.octave))
+              .append($('<button>').addClass('delete-melody-note').text('Delete')));
           i += parseInt(tmpM.length);
           tmpM = null;
           mI++;
@@ -49,14 +68,16 @@ function renderSong() {
             $('#song-output').append($('<div>').addClass('melody-note-container').attr('id', mI + '-melody')
                   .addClass('length-' + melody[mI].length)
               .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
-                  .text(melody[mI].letter + melody[mI].octave)));
+                  .text(melody[mI].letter + melody[mI].octave))
+              .append($('<button>').addClass('delete-melody-note').text('Delete')));
             i += parseInt(melody[mI].length);
             mI++;
           } else {
             $('#song-output').append($('<div>').addClass('melody-note-container').attr('id', mI + '-melody')
                     .addClass('length-' + (48 - i))
                 .append($('<p>').addClass('melody-letter').addClass('melody-octave-' + melody[mI].octave)
-                    .text(melody[mI].letter + melody[mI].octave)));
+                    .text(melody[mI].letter + melody[mI].octave))
+                .append($('<button>').addClass('delete-melody-note').text('Delete')));
             tmpM = {
               letter: '...',
               octave: melody[mI].octave,
@@ -113,6 +134,7 @@ function renderSong() {
     }
     onM = !onM;
   }
+  addDeleteMelodyOnClick();
 }
 
 function melodyToString() {
